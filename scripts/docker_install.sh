@@ -20,6 +20,3 @@ sudo systemctl enable docker
 
 # Print Docker version
 docker --version
-
-# Install Docker Compose
-sudo apt-get install docker-compose -y
