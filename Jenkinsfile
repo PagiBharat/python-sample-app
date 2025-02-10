@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REPO_URL = 'https://github.com/PagiBharat/python-sample-app.git'
+        REPO_URL = 'git@github.com:PagiBharat/python-sample-app.git'
     }
 
     stages {
