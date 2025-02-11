@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-DB_CONTAINER_NAME="inexture-db-1"
+DB_CONTAINER_NAME="python-sample-app-db-1"
 DB_NAME="mydatabase"
 DB_USER="root"
 DB_PASSWORD="password"
