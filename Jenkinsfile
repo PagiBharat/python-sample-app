@@ -1,35 +1,24 @@
 pipeline {
     agent any
-
     environment {
-        REPO_URL = 'https://github.com/PagiBharat/python-sample-app.git'
+        REPO_URL = "git@github.com:PagiBharat/python-sample-app.git"
+        APP_DIR = "/home/ubuntu/app"
     }
-
     stages {
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                git url: "${REPO_URL}"
+                git branch: 'main', credentialsId: 'ef31b9a9-64b5-49d9-8a79-e6f44d46b13d', url: "${REPO_URL}"
             }
         }
 
-        stage('Deploy Application') {
+        stage('Deploy with Docker Compose') {
             steps {
-                script {
-                    sh 'docker-compose up --build -d'
-                }
-            }
-        }
-    }
-
-    triggers {
-        cron('H 14 * * *')
-    }
-
-    post {
-        always {
-            script {
-                // Ensure Jenkins pulls the latest changes from the GitHub repository before deployment
-                sh 'git pull origin main'
+                sh '''
+                cd ${APP_DIR} || git clone ${REPO_URL} ${APP_DIR} && cd ${APP_DIR}
+                git pull origin main
+                sudo docker-compose down
+                sudo docker-compose up -d --build
+                '''
             }
         }
     }
